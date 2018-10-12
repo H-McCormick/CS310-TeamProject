@@ -30,7 +30,58 @@ public class Punch {
     }
 
     public Punch(Badge badge, int terminalid, int punchtypeid){
+        //todo badge class stuff
         
+        this.id = 0;
+        this.termID = terminalid;
+        this.punchTypeID = punchtypeid;
+        
+    }
+    
+    public int getID(){
+        return this.id;
+    }
+    public void setID(int newID){
+        this.id = newID;
+    }
+    
+    public int getTermId(){
+        return this.termID;
+    }
+    public void setTermID(int newTerm){
+        this.termID = newTerm;
+    }
+    
+    public String getBadgeID(){
+        return this.badgeID;
+    }
+    public void setBadgeID(String newbadge){
+        this.badgeID = newbadge;
+    }
+    
+    public GregorianCalendar getOriginalStamp(){
+        return this.originalStamp;
+    }
+    public void setOriginalStamp(GregorianCalendar newOrigin){
+        this.originalStamp = newOrigin;
+    }
+    
+    public GregorianCalendar getAdjustedStamp(){
+        return this.adjustedStamp;
+    }
+    public void setAdjustedStamp(GregorianCalendar newAdjust){
+        this.adjustedStamp = newAdjust;
+    }
+    
+    public int getPunchTypeID(){
+        return this.punchTypeID;
+    }
+    public void setPunchTypeID(int punchtype){
+        this.punchTypeID = punchtype;
+    }
+    
+    public String printOriginalTimestamp(){
+        String origin = 
     }
 
 }
