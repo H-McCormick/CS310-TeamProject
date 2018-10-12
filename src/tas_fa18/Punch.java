@@ -87,14 +87,18 @@ public class Punch {
     public String printOriginalTimestamp(){
         String origin = "#";
         origin = origin.concat(this.badgeID);
-        if(this.punchTypeID == 0){
-            origin = origin.concat(" CLOCKED OUT: ");
-        }
-        else if(this.punchTypeID == 1){
-            origin = origin.concat(" CLOCKED IN: ");
-        }
-        else if(this.punchTypeID == 2){
-            origin = origin.concat(" TIMED OUT: ");
+        switch (this.punchTypeID) {
+            case 0:
+                origin = origin.concat(" CLOCKED OUT: ");
+                break;
+            case 1:
+                origin = origin.concat(" CLOCKED IN: ");
+                break;
+            case 2:
+                origin = origin.concat(" TIMED OUT: ");
+                break;
+            default:
+                break;
         }
         
         
