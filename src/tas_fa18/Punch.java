@@ -18,6 +18,10 @@ public class Punch {
     private GregorianCalendar originalStamp;
     private GregorianCalendar adjustedStamp;
     private int punchTypeID;
+    
+    public static final int CLOCKED_OUT = 0; 
+    public static final int CLOCKED_IN = 1;
+    public static final int TIMED_OUT = 2;
 
     public Punch() {
             this.id = 0;
@@ -81,7 +85,20 @@ public class Punch {
     }
     
     public String printOriginalTimestamp(){
-        String origin = 
+        String origin = "#";
+        origin = origin.concat(this.badgeID);
+        if(this.punchTypeID == 0){
+            origin = origin.concat(" CLOCKED OUT: ");
+        }
+        else if(this.punchTypeID == 1){
+            origin = origin.concat(" CLOCKED IN: ");
+        }
+        else if(this.punchTypeID == 2){
+            origin = origin.concat(" TIMED OUT: ");
+        }
+        
+        
+        
     }
 
 }
