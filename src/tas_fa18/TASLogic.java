@@ -4,6 +4,7 @@ public class TASLogic {
     
     public static void TASLogic(String[] args) {
         
+        TASDatabase db = new TASDatabase();
         
         
     }
