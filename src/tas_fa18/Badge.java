@@ -10,13 +10,25 @@ package tas_fa18;
  * @author ABelj
  */
 public class Badge {
-    private string id;
-    private string description;
+    private String id;
+    private String description;
     
-    public Badge (id, description){
+    public Badge (String id, String description){
         this.id = id ;
-        this. description
+        this. description = description;
     }
-    //setter & setter
-    // to stay
+    
+    public String getID(){
+        return this.id;
+    }
+    public void setID(String newid){
+        this.id = newid;
+    }
+    
+    public String getDescription(){
+        return this.description;
+    }
+    public void setDescription(String newDesc){
+        this.description = newDesc;
+    }
 }
