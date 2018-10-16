@@ -5,8 +5,7 @@
  */
 package tas_fa18;
 
-
-import java.sql.Time;
+import java.sql.*;
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,7 +27,6 @@ public class Shift {
     public Time LunchStop;
     public int LunchDeduct; 
     
-    
     public Shift(int ID, String Description, Time Start, Time Stop, int Internal,
             int Graceperiod, int Dock, Time LunchStart, Time LunchStop, 
             int LunchDeduct){
@@ -48,6 +46,7 @@ public class Shift {
     public int getID(){
         return ID;
     }
+    
     
     public String getDescription(){
         return Description;
@@ -75,8 +74,8 @@ public class Shift {
     public int getLunchDeduct(){
         return LunchDeduct;
     }
-    private String getHourMin(){
-        return Time.toString().substring(0, 5);
+    private String getHourMin(Time time){
+        return time.toString().substring(0,0);
     }
     
     public String toString(){
