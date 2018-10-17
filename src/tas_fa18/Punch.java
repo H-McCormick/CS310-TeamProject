@@ -86,8 +86,9 @@ public class Punch {
         this.punchTypeID = punchtype;
     }
     
+    /*IMPORTANT*/
     //Snellen Note: Use SimpleDateFormat instead (http://tutorials.jenkov.com/java-internationalization/simpledateformat.html)
-    /*
+    
     public String printOriginalTimestamp(){
         String origin = "#";
         origin = origin.concat(this.badgeID);
@@ -224,6 +225,6 @@ public class Punch {
         
         return origin;
     }
-*/
+
 
 }
