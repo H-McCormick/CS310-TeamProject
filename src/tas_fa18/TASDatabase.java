@@ -12,7 +12,7 @@ public class TASDatabase {
     
     Connection conn = null;
     
-    TASDatabase(){
+    public TASDatabase(){
         
         try {
             
@@ -20,7 +20,7 @@ public class TASDatabase {
             
             String server = ("jdbc:mysql://localhost/tas");
             String username = "tasuser";
-            String password = "password";
+            String password = "teamb";
             System.out.println("Connecting to " + server + "...");
             
             /* Load the MySQL JDBC Driver */
