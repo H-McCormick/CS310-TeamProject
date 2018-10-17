@@ -1,5 +1,7 @@
 package tas_fa18;
 import java.sql.*;
+//import java.util.GregorianCalendar;
+
 
 /*
  * @author Sabrina Rosenbaum (github.com/SMRose1998)
@@ -36,7 +38,7 @@ public class TASDatabase {
         }
     }
     
-    public String getBadge(String id){
+    public Badge getBadge(String id){
         try{
             //Set Querry
             String query = "SELECT * FROM `badge` WHERE `id` = ?";
@@ -57,8 +59,10 @@ public class TASDatabase {
                 
                 //Get the name from the results
                 String name = results.getString("description");
+                
+                Badge badge = new Badge(id, name);
                
-                return name;
+                return badge;
             }
             
             //Print Querry Error
@@ -73,7 +77,7 @@ public class TASDatabase {
         }
     }
     
-    public String getPunch(String id){
+    public Punch getPunch(String id){
         
         try{
             //Set Querry
@@ -99,8 +103,10 @@ public class TASDatabase {
                 String time = results.getString("timestamp");
                 String punchType = results.getString("punchtypeid");
                 
+                
+                Punch punch = new Punch();
                
-                return time;
+                return punch;
             }
             
             //Print Querry Error
@@ -110,13 +116,13 @@ public class TASDatabase {
             
         /*Catch SQL Error*/
         }catch(Exception e){
-            System.out.print("(TASDatabase.getBadge()) System Error: "+e);
+            System.out.print("(TASDatabase.getPunch()) System Error: "+e);
             return null;
         }
         
     }
     
-    public String getShift(String id){
+    public Shift getShift(String id){
         try{
             //Set Querry
             String query = "SELECT *, "
@@ -140,10 +146,23 @@ public class TASDatabase {
                 results.next();
                 
                 //Get the data from the results
-                String start = results.getString("st");
-                
+                int intId = Integer.parseInt(id);
+                String description = results.getString("description");
+                Time start = new Time(Long.parseLong(results.getString("st")));
+                Time end = new Time(Long.parseLong(results.getString("sp")));
+                int interval = Integer.parseInt(results.getString("interval"));
+                int grace = Integer.parseInt(results.getString("graceperiod"));
+                int dock = Integer.parseInt(results.getString("dock"));
+                Time lunchstart = new Time(Long.parseLong(results.getString("stlunch")));
+                Time lunchend = new Time(Long.parseLong(results.getString("splunch")));
+                int lunchdec = Integer.parseInt(results.getString("lunchdeduct"));
                
-                return start;
+                Shift shift = new Shift(intId, description, start, end, interval, grace, dock, lunchstart, lunchend, lunchdec);
+               
+                return shift;
+                /*int ID, String Description, Time Start, Time Stop, int Internal,
+                int Graceperiod, int Dock, Time LunchStart, Time LunchStop, 
+                int LunchDeduct*/
             }
             
             //Print Querry Error
@@ -153,7 +172,7 @@ public class TASDatabase {
             
         /*Catch SQL Error*/
         }catch(Exception e){
-            System.out.print("(TASDatabase.getBadge()) System Error: "+e);
+            System.out.print("(TASDatabase.getShift()) System Error: "+e);
             return null;
         }
     }
