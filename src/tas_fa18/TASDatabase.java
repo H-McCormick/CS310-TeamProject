@@ -77,7 +77,7 @@ public class TASDatabase {
         }
     }
     
-    public Punch getPunch(String id){
+    public Punch getPunch(int id){
         
         try{
             //Set Querry
@@ -87,7 +87,7 @@ public class TASDatabase {
             PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             
             //Set String
-            statement.setString(1, id);
+            statement.setString(1, Integer.toString(id));
             
             //Execute Querry
             if(statement.execute()){
@@ -122,7 +122,7 @@ public class TASDatabase {
         
     }
     
-    public Shift getShift(String id){
+    public Shift getShift(int id){
         try{
             //Set Querry
             String query = "SELECT *, "
@@ -136,7 +136,7 @@ public class TASDatabase {
             PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             
             //Set String
-            statement.setString(1, id);
+            statement.setString(1, Integer.toString(id));
             
             //Execute Querry
             if(statement.execute()){
