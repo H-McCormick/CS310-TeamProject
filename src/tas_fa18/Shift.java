@@ -5,7 +5,7 @@
  */
 package tas_fa18;
 
-import java.sql.*;
+import java.sql.Time;
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,17 +18,17 @@ public class Shift {
     
     public int ID;
     public String Description;
-    public Time Start;
-    public Time Stop;
+    public GregorianCalendar Start;
+    public GregorianCalendar Stop;
     public int Internal;
     public int Graceperiod;
     public int Dock;
-    public Time LunchStart;
-    public Time LunchStop;
+    public GregorianCalendar LunchStart;
+    public GregorianCalendar LunchStop;
     public int LunchDeduct; 
     
-    public Shift(int ID, String Description, Time Start, Time Stop, int Internal,
-            int Graceperiod, int Dock, Time LunchStart, Time LunchStop, 
+    public Shift(int ID, String Description, GregorianCalendar Start, GregorianCalendar Stop, int Internal,
+            int Graceperiod, int Dock, GregorianCalendar LunchStart, GregorianCalendar LunchStop, 
             int LunchDeduct){
        
         this.ID= ID;
@@ -52,11 +52,11 @@ public class Shift {
         return Description;
     }
    
-    public Time getStart(){
+    public GregorianCalendar getStart(){
         return Start;
     }
     
-    public Time getStop(){
+    public GregorianCalendar getStop(){
         return Stop;
     }
     public int getInternal(){
@@ -65,16 +65,16 @@ public class Shift {
     public int getDock(){
         return Dock;
     }
-    public Time getLunchStart(){
+    public GregorianCalendar getLunchStart(){
         return LunchStart;
     }
-    public Time getLunchStop(){
+    public GregorianCalendar getLunchStop(){
         return LunchStop;
     }
     public int getLunchDeduct(){
         return LunchDeduct;
     }
-    private String getHourMin(Time time){
+    private String getHourMin(GregorianCalendar time){
         return time.toString().substring(0,0);
     }
     
