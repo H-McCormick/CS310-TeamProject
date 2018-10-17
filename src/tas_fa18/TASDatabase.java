@@ -1,6 +1,6 @@
 package tas_fa18;
 import java.sql.*;
-//import java.util.GregorianCalendar;
+import java.util.GregorianCalendar;
 
 
 /*
@@ -147,22 +147,33 @@ public class TASDatabase {
                 
                 //Get the data from the results
                 int intId = Integer.parseInt(id);
+                
                 String description = results.getString("description");
-                Time start = new Time(Long.parseLong(results.getString("st")));
-                Time end = new Time(Long.parseLong(results.getString("sp")));
-                int interval = Integer.parseInt(results.getString("interval"));
+                
+                GregorianCalendar start = new GregorianCalendar();
+                start.setTimeInMillis(Long.parseLong(results.getString("st")));
+                
+                GregorianCalendar end = new GregorianCalendar();
+                end.setTimeInMillis(Long.parseLong(results.getString("sp")));
+                
+                int interval = Integer.parseInt(results.getString("interval"))
+                        ;
                 int grace = Integer.parseInt(results.getString("graceperiod"));
+                
                 int dock = Integer.parseInt(results.getString("dock"));
-                Time lunchstart = new Time(Long.parseLong(results.getString("stlunch")));
-                Time lunchend = new Time(Long.parseLong(results.getString("splunch")));
+                
+                GregorianCalendar lunchstart = new GregorianCalendar();
+                lunchstart.setTimeInMillis(Long.parseLong(results.getString("stlunch")));
+                
+                GregorianCalendar lunchend = new GregorianCalendar();
+                lunchend.setTimeInMillis(Long.parseLong(results.getString("splunch")));
+                
                 int lunchdec = Integer.parseInt(results.getString("lunchdeduct"));
                
+                //Return shift
                 Shift shift = new Shift(intId, description, start, end, interval, grace, dock, lunchstart, lunchend, lunchdec);
                
                 return shift;
-                /*int ID, String Description, Time Start, Time Stop, int Internal,
-                int Graceperiod, int Dock, Time LunchStart, Time LunchStop, 
-                int LunchDeduct*/
             }
             
             //Print Querry Error
