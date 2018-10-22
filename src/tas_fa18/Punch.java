@@ -10,6 +10,7 @@ package tas_fa18;
  * @author forresthood
  */
 import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
 
 public class Punch {
     private int id;
@@ -132,94 +133,10 @@ public class Punch {
                 System.out.println("Error parsing day");
                 break;
         }
-        int month = this.originalStamp.get(GregorianCalendar.MONTH);
-        switch (month){
-            case 1:
-                origin = origin.concat("01/");
-                break;
-            case 2:
-                origin = origin.concat("02/");
-                break;
-            case 3:
-                origin = origin.concat("03/");
-                break;
-            case 4:
-                origin = origin.concat("04/");
-                break;
-            case 5:
-                origin = origin.concat("05/");
-                break;
-            case 6:
-                origin = origin.concat("06/");
-                break;
-            case 7:
-                origin = origin.concat("07/");
-                break;
-            case 8:
-                origin = origin.concat("08/");
-                break;
-            case 9:
-                origin = origin.concat("09/");
-                break;
-            case 10:
-                origin = origin.concat("10/");
-                break;
-            case 11:
-                origin = origin.concat("11/");
-                break;
-            case 12:
-                origin = origin.concat("12/");
-                break;
-            default:
-                System.out.println("Error parsin month");
-                break;
-            
-        }
-        int dayN = this.originalStamp.get(GregorianCalendar.DATE);
-        if (dayN < 10){
-            origin = origin.concat("0");
-            origin = origin.concat(Integer.toString(dayN));
-            origin = origin.concat("/");
-        }
-        else{
-            origin = origin.concat(Integer.toString(dayN));
-            origin = origin.concat("/");
-        }
         
-        int year = this.originalStamp.get(GregorianCalendar.YEAR);
-        origin = origin.concat(Integer.toString(year));
-        origin = origin.concat(" ");
-        
-        int hour = this.originalStamp.get(GregorianCalendar.HOUR_OF_DAY);
-        if (hour < 10){
-            origin = origin.concat("0");
-            origin = origin.concat(Integer.toString(hour));
-            origin = origin.concat(":");
-        }
-        else{
-            origin = origin.concat(Integer.toString(hour));
-            origin = origin.concat(":");
-        }
-        
-        int minute = this.originalStamp.get(GregorianCalendar.MINUTE);
-        if(minute < 10){
-            origin = origin.concat("0");
-            origin = origin.concat(Integer.toString(minute));
-            origin = origin.concat(":");
-        }
-        else{
-            origin = origin.concat(Integer.toString(minute));
-            origin = origin.concat(":");
-        }
-        
-        int second = this.originalStamp.get(GregorianCalendar.SECOND);
-        if (second < 10){
-            origin = origin.concat("0");
-            origin = origin.concat(Integer.toString(second));
-        }
-        else{
-            origin = origin.concat(Integer.toString(second));
-        }
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String dateFormatted = fmt.format(this.originalStamp.getTime());
+        origin = origin.concat(dateFormatted);
         
         
         
