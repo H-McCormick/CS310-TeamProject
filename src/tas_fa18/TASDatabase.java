@@ -122,6 +122,96 @@ public class TASDatabase {
         
     }
     
+    public Shift getShift(Badge badge){
+        
+        String badgeId = badge.getID();
+        
+        try{
+            
+            //GET EMPLOYEE
+            String getEmployeeQuery = "SELECT shiftid FROM `shift` WHERE `badgeid` = ?";
+            
+            //Prepare statement
+            PreparedStatement employeePS = conn.prepareStatement(getEmployeeQuery, Statement.RETURN_GENERATED_KEYS);
+            
+            //Set the Vars
+            employeePS.setString(1, badgeId);
+            
+            //Initialize the shiftId
+            String shiftId = "";
+            
+            //Querry Employee database
+            if(employeePS.execute()){
+                ResultSet result = employeePS.getResultSet();
+                result.next();
+                shiftId = result.getString("shiftid");
+            }
+            
+            //GET SHIFT
+            //Set Querry
+            String query = "SELECT *, "
+                    + "UNIX_TIMESTAMP(`start`) * 1000 AS `st` ,"
+                    + "UNIX_TIMESTAMP(`stop`) * 1000 AS `sp` ,"
+                    + "UNIX_TIMESTAMP(`lunchstart`) * 1000 AS `stlunch`,"
+                    + "UNIX_TIMESTAMP(`lunchstop`) * 1000 AS `splunch`"
+                    + "FROM `shift` WHERE `id` = ?";
+            
+            //Initiate Statement
+            PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            
+            //Set String
+            statement.setString(1, shiftId);
+            
+            //Execute Querry
+            if(statement.execute()){
+                
+                //Set results
+                ResultSet results = statement.getResultSet();
+                results.next();
+                
+                //Get the data from the results
+                int intId = Integer.parseInt(shiftId);
+                
+                String description = results.getString("description");
+                
+                GregorianCalendar start = new GregorianCalendar();
+                start.setTimeInMillis(Long.parseLong(results.getString("st")));
+                
+                GregorianCalendar end = new GregorianCalendar();
+                end.setTimeInMillis(Long.parseLong(results.getString("sp")));
+                
+                int interval = Integer.parseInt(results.getString("interval"))
+                        ;
+                int grace = Integer.parseInt(results.getString("graceperiod"));
+                
+                int dock = Integer.parseInt(results.getString("dock"));
+                
+                GregorianCalendar lunchstart = new GregorianCalendar();
+                lunchstart.setTimeInMillis(Long.parseLong(results.getString("stlunch")));
+                
+                GregorianCalendar lunchend = new GregorianCalendar();
+                lunchend.setTimeInMillis(Long.parseLong(results.getString("splunch")));
+                
+                int lunchdec = Integer.parseInt(results.getString("lunchdeduct"));
+               
+                //Return shift
+                Shift shift = new Shift(intId, description, start, end, interval, grace, dock, lunchstart, lunchend, lunchdec);
+               
+                return shift;
+            }
+            
+            //Print Querry Error
+            System.out.println("Query Failure: "+statement.toString());
+            return null;
+            
+            
+        /*Catch SQL Error*/
+        }catch(Exception e){
+            System.out.print("(TASDatabase.getShift()) System Error: "+e);
+            return null;
+        }
+    }
+    
     public Shift getShift(int id){
         try{
             //Set Querry
@@ -146,7 +236,7 @@ public class TASDatabase {
                 results.next();
                 
                 //Get the data from the results
-                int intId = Integer.parseInt(id);
+                int intId = id;
                 
                 String description = results.getString("description");
                 
