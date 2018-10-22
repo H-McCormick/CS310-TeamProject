@@ -33,13 +33,13 @@ public class Punch {
 
     }
 
-    public Punch(Badge badge, int terminalid, int punchtypeid){
+    public Punch(int id, int terminalid, String badgeid, GregorianCalendar originalTimestamp, int punchtypeid){
         //todo badge class stuff
-        this.id = 0;
-        this.badgeID = badge.getID();
+        this.id = id;
+        this.badgeID = badgeid;
         this.termID = terminalid;
         this.punchTypeID = punchtypeid;
-        this.originalStamp = new GregorianCalendar();
+        this.originalStamp = originalTimestamp;
         this.adjustedStamp = null;
         
     }

@@ -50,7 +50,10 @@ public class Feature1 {
         Punch p9 = db.getPunch(717);
 		
         /* Compare to Expected Values */
-
+        System.out.println("#D2C39273 CLOCKED IN: WED 09/05/2018 07:00:07");
+        System.out.println(p1.printOriginalTimestamp());
+        System.out.println(p2.getID());
+        
         assertEquals("#D2C39273 CLOCKED IN: WED 09/05/2018 07:00:07", p1.printOriginalTimestamp());
         assertEquals("#DFD9BB5C CLOCKED IN: TUE 09/04/2018 08:00:00", p2.printOriginalTimestamp());
         assertEquals("#99F0C0FA CLOCKED IN: SAT 08/18/2018 06:00:00", p3.printOriginalTimestamp());

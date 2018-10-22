@@ -19,7 +19,7 @@ public class TASDatabase {
             /* Identify the Server */
             
             String server = ("jdbc:mysql://localhost/tas");
-            String username = "tasuser";
+            String username = "root";
             String password = "teamb";
             System.out.println("Connecting to " + server + "...");
             
@@ -98,14 +98,18 @@ public class TASDatabase {
                 results.next();
                 
                 //Get the data from the results
-                String termId = results.getString("terminalid");
+                int termId = Integer.parseInt(results.getString("terminalid"));
+                
                 String badgeId = results.getString("badgeid");
-                String time = results.getString("timestamp");
-                String punchType = results.getString("punchtypeid");
+                
+                GregorianCalendar time = new GregorianCalendar();
+                time.setTimeInMillis(Long.parseLong(results.getString("timestamp")));
+                
+                int punchType = Integer.parseInt(results.getString("punchtypeid"));
                 
                 
-                Punch punch = new Punch();
-               
+                Punch punch = new Punch(id, termId, badgeId, time, punchType);
+                
                 return punch;
             }
             
@@ -129,7 +133,8 @@ public class TASDatabase {
         try{
             
             //GET EMPLOYEE
-            String getEmployeeQuery = "SELECT shiftid FROM `shift` WHERE `badgeid` = ?";
+            
+            String getEmployeeQuery = "SELECT `shiftid` FROM `employee` WHERE `badgeid` = ?";
             
             //Prepare statement
             PreparedStatement employeePS = conn.prepareStatement(getEmployeeQuery, Statement.RETURN_GENERATED_KEYS);
