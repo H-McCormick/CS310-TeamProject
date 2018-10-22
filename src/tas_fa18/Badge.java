@@ -13,6 +13,8 @@ public class Badge {
     private String id;
     private String description;
     
+    
+    
     public Badge (String id, String description){
         this.id = id ;
         this. description = description;
