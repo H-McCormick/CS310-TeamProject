@@ -50,9 +50,6 @@ public class Feature1 {
         Punch p9 = db.getPunch(717);
 		
         /* Compare to Expected Values */
-        System.out.println("#D2C39273 CLOCKED IN: WED 09/05/2018 07:00:07");
-        System.out.println(p1.printOriginalTimestamp());
-        System.out.println(p2.getID());
         
         assertEquals("#D2C39273 CLOCKED IN: WED 09/05/2018 07:00:07", p1.printOriginalTimestamp());
         assertEquals("#DFD9BB5C CLOCKED IN: TUE 09/04/2018 08:00:00", p2.printOriginalTimestamp());
@@ -102,10 +99,13 @@ public class Feature1 {
         Shift s3 = db.getShift(b3);
 		
         /* Compare to Expected Values */
+        
+     
 
         assertEquals("Shift 1: 07:00 - 15:30 (510 minutes); Lunch: 12:00 - 12:30 (30 minutes)", s1.toString());
         assertEquals("Shift 2: 12:00 - 20:30 (510 minutes); Lunch: 16:30 - 17:00 (30 minutes)", s2.toString());
         assertEquals("Shift 1 Early Lunch: 07:00 - 15:30 (510 minutes); Lunch: 11:30 - 12:00 (30 minutes)", s3.toString());
+        
 
     }
     

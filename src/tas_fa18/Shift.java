@@ -75,7 +75,11 @@ public class Shift {
         return LunchDeduct;
     }
     private String getHourMin(GregorianCalendar time){
-        return time.toString().substring(0,0);
+        //return time.toString().substring(0,0);
+        SimpleDateFormat date = new SimpleDateFormat("HH:mm");
+        String dateFormated = date.format(time.getTime());
+        
+        return dateFormated;
     }
     
     public String toString(){

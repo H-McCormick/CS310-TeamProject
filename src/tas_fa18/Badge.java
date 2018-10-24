@@ -33,4 +33,14 @@ public class Badge {
     public void setDescription(String newDesc){
         this.description = newDesc;
     }
+    
+    @Override
+    public String toString(){
+        String str = "#";
+        str += getID();
+        str += " (";
+        str += getDescription();
+        str += ")";
+        return str;
+    }
 }
