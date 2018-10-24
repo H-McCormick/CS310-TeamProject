@@ -19,7 +19,7 @@ public class TASDatabase {
             /* Identify the Server */
             
             String server = ("jdbc:mysql://localhost/tas");
-            String username = "root";
+            String username = "tasuser";
             String password = "teamb";
             System.out.println("Connecting to " + server + "...");
             
@@ -75,6 +75,21 @@ public class TASDatabase {
             System.out.print("(TASDatabase.getBadge()) System Error: "+e);
             return null;
         }
+    }
+    
+    public int insertPunch(Punch punch){
+        
+        //Get the values of punch and convert to strings
+        String id = Integer.toString(punch.getID());
+        String terminal = Integer.toString(punch.getTermId());
+        String badge = punch.getBadgeID();
+        GregorianCalendar originalstamp = punch.getOriginalStamp();
+        GregorianCalendar adjustedstamp = punch.getAdjustedStamp();
+        String punchtype = Integer.toString(punch.getPunchTypeID());
+        
+        
+        String query = "INSERT INTO ``";
+        return 0;
     }
     
     public Punch getPunch(int id){
