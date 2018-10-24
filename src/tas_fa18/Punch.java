@@ -125,6 +125,10 @@ public class Punch {
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return fmt.format(this.originalStamp.getTime());
     }
+    public String printFormattedAdjustedTimestamp(){
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return fmt.format(this.adjustedStamp.getTime());
+    }
 
 
 }
