@@ -120,6 +120,11 @@ public class Punch {
         
         return origin;
     }
+    
+    public String printFormattedOriginalTimestamp(){
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return fmt.format(this.originalStamp.getTime());
+    }
 
 
 }
