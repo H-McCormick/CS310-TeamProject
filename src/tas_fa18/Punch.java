@@ -106,35 +106,13 @@ public class Punch {
             default:
                 break;
         }
-        int day = this.originalStamp.get(GregorianCalendar.DAY_OF_WEEK);
-        switch (day) {
-            case 2:
-                origin = origin.concat("MON ");
-                break;
-            case 3:
-                origin = origin.concat("TUE ");
-                break;
-            case 4:
-                origin = origin.concat("WED ");
-                break;
-            case 5:
-                origin = origin.concat("THU ");
-                break;
-            case 6:
-                origin = origin.concat("FRI ");
-                break;
-            case 7:
-                origin = origin.concat("SAT ");
-                break;
-            case 1:
-                origin = origin.concat("SUN ");
-                break;
-            default:
-                System.out.println("Error parsing day");
-                break;
-        }
+        SimpleDateFormat form = new SimpleDateFormat("EEE");
+        String dayFormatted = form.format(this.originalStamp.getTime());
+        dayFormatted = dayFormatted.toUpperCase();
+        origin = origin.concat(dayFormatted);
+        origin = origin.concat(" ");
         
-        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         String dateFormatted = fmt.format(this.originalStamp.getTime());
         origin = origin.concat(dateFormatted);
         
