@@ -80,15 +80,44 @@ public class TASDatabase {
     public int insertPunch(Punch punch){
         
         //Get the values of punch and convert to strings
-        String id = Integer.toString(punch.getID());
+        String id = Integer.toString();
         String terminal = Integer.toString(punch.getTermId());
         String badge = punch.getBadgeID();
-        GregorianCalendar originalstamp = punch.getOriginalStamp();
-        GregorianCalendar adjustedstamp = punch.getAdjustedStamp();
+        String originalstamp = punch.printFormattedOriginalTimestamp();
+        //GregorianCalendar adjustedstamp = punch.getAdjustedStamp();
         String punchtype = Integer.toString(punch.getPunchTypeID());
         
         
-        String query = "INSERT INTO ``";
+        try{
+        //Set query
+        String query = "INSERT INTO `punch` VALUES(?, ?, ?, ?, ?)";
+        
+        //Set Statement
+        PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        
+        //Set Query Strings
+        statement.setString(1, id);
+        statement.setString(2, terminal);
+        statement.setString(3, badge);
+        statement.setString(4, originalstamp);
+        statement.setString(5, punchtype);
+        
+        //Execute Statement
+        if(statement.execute()){
+            ResultSet result = statement.getResultSet();
+            return Integer.parseInt(result.getString("id"));
+            
+        }else{
+            System.out.println("Error: Insert Punch Execution failure");
+            return -1;
+        }
+        
+        
+        
+        }catch(Exception e){
+            System.out.println("(TASDatabase.insertPunch()) System Error: "+e);
+            return -1;
+        }
         return 0;
     }
     
@@ -135,7 +164,7 @@ public class TASDatabase {
             
         /*Catch SQL Error*/
         }catch(Exception e){
-            System.out.print("(TASDatabase.getPunch()) System Error: "+e);
+            System.out.println("(TASDatabase.getPunch()) System Error: "+e);
             return null;
         }
         
@@ -227,7 +256,7 @@ public class TASDatabase {
             
         /*Catch SQL Error*/
         }catch(Exception e){
-            System.out.print("(TASDatabase.getShift()) System Error: "+e);
+            System.out.println("(TASDatabase.getShift()) System Error: "+e);
             return null;
         }
     }
@@ -293,7 +322,7 @@ public class TASDatabase {
             
         /*Catch SQL Error*/
         }catch(Exception e){
-            System.out.print("(TASDatabase.getShift()) System Error: "+e);
+            System.out.println("(TASDatabase.getShift()) System Error: "+e);
             return null;
         }
     }
