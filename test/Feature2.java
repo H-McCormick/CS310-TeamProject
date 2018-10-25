@@ -5,6 +5,11 @@ import java.util.GregorianCalendar;
 import org.junit.*;
 import static org.junit.Assert.*;
 
+import tas_fa18.Shift;
+import tas_fa18.TASDatabase;
+import tas_fa18.Punch;
+import tas_fa18.Badge;
+
 public class Feature2 {
     
     private TASDatabase db;

@@ -80,7 +80,7 @@ public class TASDatabase {
     public int insertPunch(Punch punch){
         
         //Get the values of punch and convert to strings
-        String id = Integer.toString();
+        String id = Integer.toString(punch.getID());
         String terminal = Integer.toString(punch.getTermId());
         String badge = punch.getBadgeID();
         String originalstamp = punch.printFormattedOriginalTimestamp();
@@ -118,7 +118,6 @@ public class TASDatabase {
             System.out.println("(TASDatabase.insertPunch()) System Error: "+e);
             return -1;
         }
-        return 0;
     }
     
     public Punch getPunch(int id){
