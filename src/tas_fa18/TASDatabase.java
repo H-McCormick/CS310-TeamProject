@@ -333,11 +333,11 @@ public class TASDatabase {
         
         //Create a GC calander for querying
         GregorianCalendar starttime = new GregorianCalendar(); 
-        starttime.setTimeInMillis(time);                ///<--------------FIX HERE
+        starttime.setTimeInMillis(time*1000);                ///<--------------FIX HERE
         
         //Create Next Day calander
         GregorianCalendar endtime = new GregorianCalendar(); 
-        endtime.setTimeInMillis(time);                  ///<--------------FIX HERE
+        endtime.setTimeInMillis(time*1000);                  ///<--------------FIX HERE
         endtime.add(Calendar.DAY_OF_MONTH, 1);
         
         //Set time format yyyy-mm-dd
