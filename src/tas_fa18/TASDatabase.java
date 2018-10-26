@@ -1,6 +1,9 @@
 package tas_fa18;
 import java.sql.*;
 import java.util.GregorianCalendar;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 
 /*
@@ -11,8 +14,9 @@ import java.util.GregorianCalendar;
 public class TASDatabase {
     
     Connection conn = null;
-    
+   
     public TASDatabase(){
+        
         
         try {
             
@@ -74,48 +78,6 @@ public class TASDatabase {
         }catch(Exception e){
             System.out.print("(TASDatabase.getBadge()) System Error: "+e);
             return null;
-        }
-    }
-    
-    public int insertPunch(Punch punch){
-        
-        //Get the values of punch and convert to strings
-        String id = Integer.toString(punch.getID());
-        String terminal = Integer.toString(punch.getTerminalid());
-        String badge = punch.getBadgeid();
-        String originalstamp = punch.printFormattedOriginalTimestamp();
-        //GregorianCalendar adjustedstamp = punch.getAdjustedStamp();
-        String punchtype = Integer.toString(punch.getPunchtypeid());
-        
-        
-        try{
-        //Set query
-        String query = "INSERT INTO `punch` (terminalid, badgeid, originaltimestamp, punchtypeid) VALUES(?, ?, ?, ?)";
-        
-        //Set Statement
-        PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        
-        //Set Query Strings
-        statement.setString(1, terminal);
-        statement.setString(2, badge);
-        statement.setString(3, originalstamp);
-        statement.setString(4, punchtype);
-        
-        //Execute Statement
-        if(statement.execute()){
-            ResultSet result = statement.getResultSet();
-            return Integer.parseInt(result.getString("id"));
-            
-        }else{
-            System.out.println("Error: Insert Punch Execution failure");
-            return -1;
-        }
-        
-        
-        
-        }catch(Exception e){
-            System.out.println("(TASDatabase.insertPunch()) System Error: "+e);
-            return -1;
         }
     }
     
@@ -325,5 +287,102 @@ public class TASDatabase {
         }
     }
     
+    public int insertPunch(Punch punch){
+        
+        //Get the values of punch and convert to strings
+        String id = Integer.toString(punch.getID());
+        String terminal = Integer.toString(punch.getTerminalid());
+        String badge = punch.getBadgeid();
+        String originalstamp = punch.printFormattedOriginalTimestamp();
+        //GregorianCalendar adjustedstamp = punch.getAdjustedStamp();
+        String punchtype = Integer.toString(punch.getPunchtypeid());
+        
+        
+        try{
+        //Set query
+        String query = "INSERT INTO `punch` (terminalid, badgeid, originaltimestamp, punchtypeid) VALUES(?, ?, ?, ?)";
+        
+        //Set Statement
+        PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        
+        //Set Query Strings
+        statement.setString(1, terminal);
+        statement.setString(2, badge);
+        statement.setString(3, originalstamp);
+        statement.setString(4, punchtype);
+        
+        //Execute Statement
+        if(statement.execute()){
+            ResultSet result = statement.getResultSet();
+            return Integer.parseInt(result.getString("id"));
+            
+        }else{
+            System.out.println("Error: Insert Punch Execution failure");
+            return -1;
+        }
+        
+        
+        
+        }catch(Exception e){
+            System.out.println("(TASDatabase.insertPunch()) System Error: "+e);
+            return -1;
+        }
+    }
+    
+    public ArrayList getDailyPunchList(Badge badge, long time){
+        
+        //Create a GC calander for querying
+        GregorianCalendar starttime = new GregorianCalendar(); 
+        starttime.setTimeInMillis(time);                ///<--------------FIX HERE
+        
+        //Create Next Day calander
+        GregorianCalendar endtime = new GregorianCalendar(); 
+        endtime.setTimeInMillis(time);                  ///<--------------FIX HERE
+        endtime.add(Calendar.DAY_OF_MONTH, 1);
+        
+        //Set time format yyyy-mm-dd
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        
+        //Date Strings
+        String startdate = fmt.format(starttime.getTime());
+        String enddate = fmt.format(endtime.getTime());
+        
+        System.out.println(enddate);
+        System.out.println(startdate);
+        
+        try{
+            
+            String query = "SELECT * FROM `punch` WHERE `originaltimestamp` BETWEEN ? AND ?";
+            
+             //Set Statement
+            PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+            //Set Query Strings
+            statement.setString(1, startdate);
+            statement.setString(2, enddate);
+            
+            if(statement.execute()){
+                
+                //Initialize ArrayList
+                ArrayList<Punch> punchList = new ArrayList<Punch>();
+                
+                //Get Results
+                ResultSet result = statement.getResultSet();
+                
+                while (result.next()){
+                    System.out.println(result.getString("originaltimestamp"));
+                }
+            
+            }else{
+                System.out.println("Error: Insert Punch Execution failure");
+            }
+            
+            
+        }catch(Exception e){
+            
+            System.out.println("(TASDatabase.getDailyPunchList()) System Error: "+e);
+        }
+        return null;
+    }
     
 }
