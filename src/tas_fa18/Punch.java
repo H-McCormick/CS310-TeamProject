@@ -33,6 +33,16 @@ public class Punch {
             this.punchTypeID = 0;
 
     }
+    
+    public Punch(Badge badge, int termid, int punchtypeid){
+        this.id = 0;
+        this.termID = termid;
+        this.badgeID = badge.getID();
+        this.originalStamp = new GregorianCalendar();
+        this. adjustedStamp = null;
+        this.punchTypeID = punchtypeid;
+        
+    }
 
     public Punch(int id, int terminalid, String badgeid, GregorianCalendar originalTimestamp, int punchtypeid){
         //todo badge class stuff
@@ -52,38 +62,38 @@ public class Punch {
         this.id = newID;
     }
     
-    public int getTermId(){
+    public int getTerminalid(){
         return this.termID;
     }
-    public void setTermID(int newTerm){
+    public void setTerminalid(int newTerm){
         this.termID = newTerm;
     }
     
-    public String getBadgeID(){
+    public String getBadgeid(){
         return this.badgeID;
     }
-    public void setBadgeID(String newbadge){
+    public void setBadgeid(String newbadge){
         this.badgeID = newbadge;
     }
     
-    public GregorianCalendar getOriginalStamp(){
-        return this.originalStamp;
+    public long getOriginaltimestamp(){
+        return this.originalStamp.getTimeInMillis();
     }
-    public void setOriginalStamp(GregorianCalendar newOrigin){
+    public void setOriginaltimestamp(GregorianCalendar newOrigin){
         this.originalStamp = newOrigin;
     }
     
-    public GregorianCalendar getAdjustedStamp(){
-        return this.adjustedStamp;
+    public long getAdjustedtimestamp(){
+        return this.adjustedStamp.getTimeInMillis();
     }
-    public void setAdjustedStamp(GregorianCalendar newAdjust){
+    public void setAdjustedtimestamp(GregorianCalendar newAdjust){
         this.adjustedStamp = newAdjust;
     }
     
-    public int getPunchTypeID(){
+    public int getPunchtypeid(){
         return this.punchTypeID;
     }
-    public void setPunchTypeID(int punchtype){
+    public void setPunchtypeid(int punchtype){
         this.punchTypeID = punchtype;
     }
     
