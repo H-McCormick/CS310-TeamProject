@@ -81,26 +81,25 @@ public class TASDatabase {
         
         //Get the values of punch and convert to strings
         String id = Integer.toString(punch.getID());
-        String terminal = Integer.toString(punch.getTermId());
-        String badge = punch.getBadgeID();
+        String terminal = Integer.toString(punch.getTerminalid());
+        String badge = punch.getBadgeid();
         String originalstamp = punch.printFormattedOriginalTimestamp();
         //GregorianCalendar adjustedstamp = punch.getAdjustedStamp();
-        String punchtype = Integer.toString(punch.getPunchTypeID());
+        String punchtype = Integer.toString(punch.getPunchtypeid());
         
         
         try{
         //Set query
-        String query = "INSERT INTO `punch` VALUES(?, ?, ?, ?, ?)";
+        String query = "INSERT INTO `punch` (terminalid, badgeid, originaltimestamp, punchtypeid) VALUES(?, ?, ?, ?)";
         
         //Set Statement
         PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         
         //Set Query Strings
-        statement.setString(1, id);
-        statement.setString(2, terminal);
-        statement.setString(3, badge);
-        statement.setString(4, originalstamp);
-        statement.setString(5, punchtype);
+        statement.setString(1, terminal);
+        statement.setString(2, badge);
+        statement.setString(3, originalstamp);
+        statement.setString(4, punchtype);
         
         //Execute Statement
         if(statement.execute()){
