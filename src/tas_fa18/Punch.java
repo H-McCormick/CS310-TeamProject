@@ -45,7 +45,6 @@ public class Punch {
     }
 
     public Punch(int id, int terminalid, String badgeid, GregorianCalendar originalTimestamp, int punchtypeid){
-        //todo badge class stuff
         this.id = id;
         this.badgeID = badgeid;
         this.termID = terminalid;
