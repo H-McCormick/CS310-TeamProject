@@ -20,7 +20,7 @@ public class Shift {
     public String Description;
     public GregorianCalendar Start;
     public GregorianCalendar Stop;
-    public int Internal;
+    public int Interval;
     public int Graceperiod;
     public int Dock;
     public GregorianCalendar LunchStart;
@@ -35,7 +35,7 @@ public class Shift {
         this.Description = Description;
         this.Start= Start;
         this.Stop= Stop;
-        this.Internal= Internal;
+        this.Interval= Internal;
         this.Graceperiod= Graceperiod;
         this.Dock= Dock;
         this.LunchStart= LunchStart;
@@ -59,8 +59,8 @@ public class Shift {
     public GregorianCalendar getStop(){
         return Stop;
     }
-    public int getInternal(){
-        return Internal;
+    public int getInterval(){
+        return Interval;
     }
     public int getDock(){
         return Dock;
@@ -70,6 +70,9 @@ public class Shift {
     }
     public GregorianCalendar getLunchStop(){
         return LunchStop;
+    }
+    public int getGracePeriod(){
+        return this.Graceperiod;
     }
     public int getLunchDeduct(){
         return LunchDeduct;
