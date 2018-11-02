@@ -149,11 +149,19 @@ public class Punch {
         int dock = shift.getDock();
         long lunchStart = shift.getLunchStart().getTimeInMillis();
         long lunchStop = shift.getLunchStop().getTimeInMillis();
-        int lunchDeduct = shift.getLunchDeduct();
         long punchin = this.originalStamp.getTimeInMillis();
         
-        //If it's a clock in
+        long gracePeriodMillis = gracePeriod*60000;
+        long intervalMillis = interval*60000;
+        long dockMillis = dock*60000;
         
+        
+        //If it's a clock in
+        if(this.punchTypeID == CLOCKED_IN){
+            if
+            
+            
+        }
         
     }
     
