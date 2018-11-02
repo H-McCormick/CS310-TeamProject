@@ -177,6 +177,16 @@ public class Punch {
             
         }
         
+        if (this.punchTypeID == CLOCKED_OUT) {
+            //Shift Stop
+            if (((shiftStart - gracePeriodMillis) < punchin) && (shiftStop > punchin)) {
+                // If it is in within Grace period
+                this.adjustedStamp.setTimeInMillis(shiftStop);
+                this.adjustedRule = "Shift Stop";
+            }
+           
+        }
+        
     }
     
 
