@@ -158,7 +158,10 @@ public class Punch {
         
         //If it's a clock in
         if(this.punchTypeID == CLOCKED_IN){
-            if
+            if (((shiftStart - gracePeriodMillis) < punchin) && (shiftStart > punchin)){
+                this.adjustedStamp.setTimeInMillis(shiftStart);
+                this.adjustedRule = "Shift Start";
+            }
             
             
         }
