@@ -158,10 +158,18 @@ public class Punch {
         
         //If it's a clock in
         if(this.punchTypeID == CLOCKED_IN){
-            if (((shiftStart - gracePeriodMillis) < punchin) && (shiftStart > punchin)){
+            //Shift Start
+            if (((shiftStart + gracePeriodMillis) > punchin) && (shiftStart < punchin)){
+                //Within Grace Period
                 this.adjustedStamp.setTimeInMillis(shiftStart);
                 this.adjustedRule = "Shift Start";
             }
+            if(((shiftStart) > punchin) && (shiftStart - intervalMillis) < punchin){
+                //Before Start of Shift
+                this.adjustedStamp.setTimeInMillis(dockMillis);
+            }
+                
+            //Lunch Stop
             if ((lunchStart < punchin) && (lunchStop > punchin)){
                 this.adjustedStamp.setTimeInMillis(lunchStop);
                 this.adjustedRule = "Lunch Stop";
