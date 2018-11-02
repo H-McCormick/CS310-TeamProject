@@ -19,6 +19,7 @@ public class Punch {
     private GregorianCalendar originalStamp;
     private GregorianCalendar adjustedStamp;
     private int punchTypeID;
+    private String adjustedRule;
     
     public static final int CLOCKED_OUT = 0; 
     public static final int CLOCKED_IN = 1;
@@ -138,7 +139,24 @@ public class Punch {
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return fmt.format(this.adjustedStamp.getTime());
     }
+    
+    //Feature 3
+    public void adjust(Shift shift){
+        long shiftStart = shift.getStart().getTimeInMillis();
+        long shiftStop = shift.getStop().getTimeInMillis();
+        int gracePeriod = shift.getGracePeriod();
+        int interval = shift.getInterval();
+        int dock = shift.getDock();
+        long lunchStart = shift.getLunchStart().getTimeInMillis();
+        long lunchStop = shift.getLunchStop().getTimeInMillis();
+        int lunchDeduct = shift.getLunchDeduct();
+        long punchin = this.originalStamp.getTimeInMillis();
+        
+        //If it's a clock in
+        
+        
+    }
+    
 
 
 }
-//2018-08-01 05:49:24
