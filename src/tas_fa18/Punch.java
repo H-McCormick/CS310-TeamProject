@@ -162,7 +162,10 @@ public class Punch {
                 this.adjustedStamp.setTimeInMillis(shiftStart);
                 this.adjustedRule = "Shift Start";
             }
-            
+            if ((lunchStart < punchin) && (lunchStop > punchin)){
+                this.adjustedStamp.setTimeInMillis(lunchStop);
+                this.adjustedRule = "Lunch Stop";
+            }
             
         }
         
