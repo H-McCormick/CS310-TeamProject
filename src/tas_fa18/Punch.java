@@ -160,13 +160,19 @@ public class Punch {
         if(this.punchTypeID == CLOCKED_IN){
             //Shift Start
             if (((shiftStart + gracePeriodMillis) > punchin) && (shiftStart < punchin)){
-                //Within Grace Period
+                //Within grace period
                 this.adjustedStamp.setTimeInMillis(shiftStart);
                 this.adjustedRule = "Shift Start";
             }
             if(((shiftStart) > punchin) && (shiftStart - intervalMillis) < punchin){
-                //Before Start of Shift
-                this.adjustedStamp.setTimeInMillis(dockMillis);
+                //Before start of shift
+                this.adjustedStamp.setTimeInMillis(shiftStart);
+                this.adjustedRule = "Shift Start";
+            }
+            if(((shiftStart + gracePeriod) < punchin) && (shiftStart + intervalMillis) > punchin){
+                //After grace period
+                this.adjustedStamp.setTimeInMillis(shiftStart + intervalMillis);
+                this.adjustedRule = "Shift Dock";
             }
                 
             //Lunch Stop
