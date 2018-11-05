@@ -164,19 +164,19 @@ public class Punch {
                 this.adjustedStamp.setTimeInMillis(shiftStart);
                 this.adjustedRule = "Shift Start";
             }
-            if(((shiftStart) > punchin) && (shiftStart - intervalMillis) < punchin){
+            else if(((shiftStart) > punchin) && (shiftStart - intervalMillis) < punchin){
                 //Before start of shift
                 this.adjustedStamp.setTimeInMillis(shiftStart);
                 this.adjustedRule = "Shift Start";
             }
-            if(((shiftStart + gracePeriod) < punchin) && (shiftStart + intervalMillis) > punchin){
+            else if(((shiftStart + gracePeriod) < punchin) && (shiftStart + intervalMillis) > punchin){
                 //After grace period
                 this.adjustedStamp.setTimeInMillis(shiftStart + intervalMillis);
                 this.adjustedRule = "Shift Dock";
             }
                 
             //Lunch Stop
-            if ((lunchStart < punchin) && (lunchStop > punchin)){
+            else if ((lunchStart < punchin) && (lunchStop > punchin)){
                 this.adjustedStamp.setTimeInMillis(lunchStop);
                 this.adjustedRule = "Lunch Stop";
             }
