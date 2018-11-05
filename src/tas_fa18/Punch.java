@@ -131,6 +131,40 @@ public class Punch {
         
         return origin;
     }
+    public String printAdjustedTimestamp(){
+        String origin = "#";
+        origin = origin.concat(this.badgeID);
+        switch (this.punchTypeID) {
+            case 0:
+                origin = origin.concat(" CLOCKED OUT: ");
+                break;
+            case 1:
+                origin = origin.concat(" CLOCKED IN: ");
+                break;
+            case 2:
+                origin = origin.concat(" TIMED OUT: ");
+                break;
+            default:
+                break;
+        }
+        SimpleDateFormat form = new SimpleDateFormat("EEE");
+        String dayFormatted = form.format(this.adjustedStamp.getTime());
+        dayFormatted = dayFormatted.toUpperCase();
+        origin = origin.concat(dayFormatted);
+        origin = origin.concat(" ");
+        
+        SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String dateFormatted = fmt.format(this.adjustedStamp.getTime());
+        origin = origin.concat(dateFormatted);
+        
+        origin = origin.concat(" (");
+        origin = origin.concat(this.adjustedRule);
+        origin = origin.concat(")");
+        
+        
+        
+        return origin;
+    }
     
     public String printFormattedOriginalTimestamp(){
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
