@@ -207,18 +207,38 @@ public class Punch {
             
         }
         
+        //ShiftStop
         if (this.punchTypeID == CLOCKED_OUT) {
-            //Shift Stop
-            if (((shiftStart - gracePeriodMillis) < punchin) && (shiftStop > punchin)) {
-                // If it is in within Grace period
+            
+           //If it is within the grace period
+            if (((shiftStop - gracePeriodMillis) < punchin) && (shiftStop > punchin)) {
                 this.adjustedStamp.setTimeInMillis(shiftStop);
                 this.adjustedRule = "Shift Stop";
-            }
-           
+                }
+            
+            //After the end of the shift
+            else if (((shiftStop < punchin) && (shiftStop + intervalMillis) > punchin)) {
+                this.adjustedStamp.setTimeInMillis(shiftStop);
+                this.adjustedRule = "Shift Stop";
+                }
+            
+            //After Grace Period
+            else if (((shiftStop - gracePeriod) > punchin) && (shiftStop - intervalMillis) < punchin) {
+                this.adjustedStamp.setTimeInMillis(shiftStop - intervalMillis);
+                this.adjustedRule = "Shift Dock";
+                }
+            
+            //Lunch Start
+            else if ((lunchStop > punchin) && (lunchStart < punchin)) {
+                this.adjustedStamp.setTimeInMillis(lunchStart);
+                this.adjustedRule = "Lunch Start";
+                }
         }
         
-    }
+     }
+        
+   }
+
+
     
 
-
-}
