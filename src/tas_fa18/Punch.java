@@ -190,9 +190,36 @@ public class Punch {
         long intervalMillis = interval*60000;
         long dockMillis = dock*60000;
         
+        int day = originalStamp.get(Calendar.DAY_OF_WEEK);
+        
+        if(day == 7 || day == 1){
+            //Round up to adjusted timeframe (15)
+                 
+            //Minutes in the hour
+            int min = this.originalStamp.get(Calendar.MINUTE);
+                 
+            //Check moving up
+            boolean adjustUp = min % interval > interval/2;
+                 
+            //Adjustment amount 
+            int adjustAmount = (min%interval);
+                         
+            //If it is being rounded up
+            if(adjustUp){
+                this.originalStamp.add(Calendar.MINUTE, adjustAmount);
+            }
+            //If it is being rounded down
+            else{
+                this.originalStamp.add(Calendar.MINUTE, -adjustAmount);
+            }
+                     
+            this.adjustedStamp.set(Calendar.SECOND, 0);
+            this.adjustedRule = "None";
+        }
+        
         
         //If it's a clock in
-        if(this.punchTypeID == CLOCKED_IN){
+        else if(this.punchTypeID == CLOCKED_IN){
             //Shift Start
             if (((shiftStart + gracePeriodMillis) > punchin) && (shiftStart < punchin)){
                 //Within grace period
@@ -215,34 +242,34 @@ public class Punch {
                 this.adjustedRule = "Lunch Stop";
             }
             else{
-                 //Round up to adjusted timeframe (15)
+                //Round up to adjusted timeframe (15)
                  
-                 //Minutes in the hour
-                 int min = this.originalStamp.get(Calendar.MINUTE);
+                //Minutes in the hour
+                int min = this.originalStamp.get(Calendar.MINUTE);
                  
-                 //Check moving up
-                 boolean adjustUp = min % interval > interval/2;
+                //Check moving up
+                boolean adjustUp = min % interval > interval/2;
                  
-                 //Adjustment amount 
-                 int adjustAmount = (min%interval);
+                //Adjustment amount 
+                int adjustAmount = (min%interval);
                          
-                 //If it is being rounded up
-                 if(adjustUp){
-                     this.originalStamp.add(Calendar.MINUTE, adjustAmount);
-                 }
-                 //If it is being rounded down
-                 else{
-                     this.originalStamp.add(Calendar.MINUTE, -adjustAmount);
-                 }
-                     
-                 this.adjustedStamp.set(Calendar.SECOND, 0);
-                 this.adjustedRule = "None";
+                //If it is being rounded up
+                if(adjustUp){
+                    this.originalStamp.add(Calendar.MINUTE, adjustAmount);
+                }
+                //If it is being rounded down
+                else{
+                    this.originalStamp.add(Calendar.MINUTE, -adjustAmount);
+                }
+                    
+                this.adjustedStamp.set(Calendar.SECOND, 0);
+                this.adjustedRule = "None";
             }
             
         }
         
         //ShiftStop
-        if (this.punchTypeID == CLOCKED_OUT) {
+        else if (this.punchTypeID == CLOCKED_OUT) {
             
            //If it is within the grace period
             if (((shiftStop - gracePeriodMillis) < punchin) && (shiftStop > punchin)) {
