@@ -52,7 +52,7 @@ public class Punch {
         this.termID = terminalid;
         this.punchTypeID = punchtypeid;
         this.originalStamp = originalTimestamp;
-        this.adjustedStamp = new GregorianCalendat();
+        this.adjustedStamp = new GregorianCalendar();
         
     }
     
