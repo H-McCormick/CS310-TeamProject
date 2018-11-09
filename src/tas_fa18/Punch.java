@@ -31,7 +31,7 @@ public class Punch {
             this.termID = 0;
             this.badgeID = null;
             this.originalStamp = new GregorianCalendar();
-            this.adjustedStamp = null;
+            this.adjustedStamp = new GregorianCalendar();
             this.punchTypeID = 0;
 
     }
@@ -41,7 +41,7 @@ public class Punch {
         this.termID = termid;
         this.badgeID = badge.getID();
         this.originalStamp = new GregorianCalendar();
-        this. adjustedStamp = null;
+        this. adjustedStamp = new GregorianCalendar();
         this.punchTypeID = punchtypeid;
         
     }
@@ -52,7 +52,7 @@ public class Punch {
         this.termID = terminalid;
         this.punchTypeID = punchtypeid;
         this.originalStamp = originalTimestamp;
-        this.adjustedStamp = null;
+        this.adjustedStamp = new GregorianCalendat();
         
     }
     
@@ -177,6 +177,7 @@ public class Punch {
     
     //Feature 3
     public void adjust(Shift shift){
+        this.adjustedStamp.setTimeInMillis(this.originalStamp.getTimeInMillis());
         long shiftStart = shift.getStart().getTimeInMillis();
         long shiftStop = shift.getStop().getTimeInMillis();
         int gracePeriod = shift.getGracePeriod();
