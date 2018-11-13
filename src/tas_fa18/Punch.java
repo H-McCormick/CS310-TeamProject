@@ -207,11 +207,11 @@ public class Punch {
                          
             //If it is being rounded up
             if(adjustUp){
-                this.originalStamp.add(Calendar.MINUTE, adjustAmount);
+                this.adjustedStamp.add(Calendar.MINUTE, adjustAmount);
             }
             //If it is being rounded down
             else{
-                this.originalStamp.add(Calendar.MINUTE, -adjustAmount);
+                this.adjustedStamp.add(Calendar.MINUTE, -adjustAmount);
             }
                      
             this.adjustedStamp.set(Calendar.SECOND, 0);
@@ -256,11 +256,11 @@ public class Punch {
                          
                 //If it is being rounded up
                 if(adjustUp){
-                    this.originalStamp.add(Calendar.MINUTE, adjustAmount);
+                    this.adjustedStamp.add(Calendar.MINUTE, adjustAmount);
                 }
                 //If it is being rounded down
                 else{
-                    this.originalStamp.add(Calendar.MINUTE, -adjustAmount);
+                    this.adjustedStamp.add(Calendar.MINUTE, -adjustAmount);
                 }
                     
                 this.adjustedStamp.set(Calendar.SECOND, 0);
@@ -295,6 +295,31 @@ public class Punch {
                 this.adjustedStamp.setTimeInMillis(lunchStart);
                 this.adjustedRule = "Lunch Start";
                 }
+            
+            else{
+                //Round up to adjusted timeframe (15)
+                 
+                //Minutes in the hour
+                int min = this.originalStamp.get(Calendar.MINUTE);
+                 
+                //Check moving up
+                boolean adjustUp = min % interval > interval/2;
+                 
+                //Adjustment amount 
+                int adjustAmount = (min%interval);
+                         
+                //If it is being rounded up
+                if(adjustUp){
+                    this.adjustedStamp.add(Calendar.MINUTE, adjustAmount);
+                }
+                //If it is being rounded down
+                else{
+                    this.adjustedStamp.add(Calendar.MINUTE, -adjustAmount);
+                }
+                    
+                this.adjustedStamp.set(Calendar.SECOND, 0);
+                this.adjustedRule = "None";
+            }
         }
         
      }
