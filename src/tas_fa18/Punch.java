@@ -215,7 +215,7 @@ public class Punch {
             }
                      
             this.adjustedStamp.set(Calendar.SECOND, 0);
-            this.adjustedRule = "None";
+            this.adjustedRule = "Interval Round";
         }
         
         
