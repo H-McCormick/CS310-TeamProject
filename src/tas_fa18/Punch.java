@@ -175,6 +175,31 @@ public class Punch {
         return fmt.format(this.adjustedStamp.getTime());
     }
     
+    private void noneRule(int interval){
+        //Round up to adjusted timeframe (15)
+                 
+            //Minutes in the hour
+            int min = this.originalStamp.get(Calendar.MINUTE);
+                 
+            //Check moving up
+            boolean adjustUp = min % interval > interval/2;
+                 
+            //Adjustment amount 
+            int adjustAmount = (min%interval);
+                         
+            //If it is being rounded up
+            if(adjustUp){
+                this.adjustedStamp.add(Calendar.MINUTE, (interval - adjustAmount));
+            }
+            //If it is being rounded down
+            else{
+                this.adjustedStamp.add(Calendar.MINUTE, - adjustAmount);
+            }
+                     
+            this.adjustedStamp.set(Calendar.SECOND, 0);
+            this.adjustedRule = "Interval Round";
+    }
+    
     //Feature 3
     public void adjust(Shift shift){
         this.adjustedStamp.setTimeInMillis(this.originalStamp.getTimeInMillis());
@@ -194,28 +219,7 @@ public class Punch {
         int day = originalStamp.get(Calendar.DAY_OF_WEEK);
         
         if(day == 7 || day == 1){
-            //Round up to adjusted timeframe (15)
-                 
-            //Minutes in the hour
-            int min = this.originalStamp.get(Calendar.MINUTE);
-                 
-            //Check moving up
-            boolean adjustUp = min % interval > interval/2;
-                 
-            //Adjustment amount 
-            int adjustAmount = (min%interval);
-                         
-            //If it is being rounded up
-            if(adjustUp){
-                this.adjustedStamp.add(Calendar.MINUTE, adjustAmount);
-            }
-            //If it is being rounded down
-            else{
-                this.adjustedStamp.add(Calendar.MINUTE, -adjustAmount);
-            }
-                     
-            this.adjustedStamp.set(Calendar.SECOND, 0);
-            this.adjustedRule = "Interval Round";
+            this.noneRule(interval);
         }
         
         
@@ -256,11 +260,11 @@ public class Punch {
                          
                 //If it is being rounded up
                 if(adjustUp){
-                    this.adjustedStamp.add(Calendar.MINUTE, adjustAmount);
+                    this.adjustedStamp.add((Calendar.MINUTE), adjustAmount);
                 }
                 //If it is being rounded down
                 else{
-                    this.adjustedStamp.add(Calendar.MINUTE, -adjustAmount);
+                    this.adjustedStamp.add((Calendar.MINUTE), - adjustAmount);
                 }
                     
                 this.adjustedStamp.set(Calendar.SECOND, 0);
