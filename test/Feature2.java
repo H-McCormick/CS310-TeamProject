@@ -85,6 +85,7 @@ public class Feature2 {
         /* Retrieve Punch List #1 (created by "getDailyPunchList()") */
         
         ArrayList<Punch> p1 = db.getDailyPunchList(b, ts.getTimeInMillis());
+        //System.out.println("DEBUG Feature2 line 88: "+ts.getTimeInMillis());
         
         /* Export Punch List #1 Contents to StringBuilder */
         
@@ -113,7 +114,12 @@ public class Feature2 {
         
         /* Compare Output Strings */
         
+        
+        //System.out.println("DEBUG: s1 - "+s1.toString());
+        //System.out.println("DEBUG: s2 - "+s2.toString());
+        
         assertEquals( s1.toString(), s2.toString() );
+        
         
     }
     

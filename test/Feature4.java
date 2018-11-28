@@ -2,6 +2,7 @@ import tas_fa18.Shift;
 import tas_fa18.TASDatabase;
 import tas_fa18.Punch;
 import tas_fa18.Badge;
+import tas_fa18.TASLogic;
 
 import java.util.ArrayList;
 import org.junit.*;

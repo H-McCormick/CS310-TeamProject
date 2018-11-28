@@ -85,7 +85,8 @@ public class TASDatabase {
         
         try{
             //Set Querry
-            String query = "SELECT *, UNIX_TIMESTAMP(`originaltimestamp`) * 1000 AS `timestamp` FROM `punch` WHERE `id` = ?";
+            String query = "SELECT *, UNIX_TIMESTAMP(`originaltimestamp`) * 1000 AS `timestamp` FROM `punch` WHERE `id` = ?"
+                    + "ORDER BY originaltimestamp";
             
             //Initiate Statement
             PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
