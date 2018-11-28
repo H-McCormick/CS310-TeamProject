@@ -19,8 +19,12 @@ public class TASLogic {
         
         //Loop through the punches
         for(Punch punch: punchList){
-            System.out.println(punch.getAdjustedtimestamp());
+
+    //DEBUG
+            /*System.out.println(punch.getAdjustedtimestamp());
             System.out.println(punch.getPunchtypeid());
+            System.out.println(shift.getLunchStart().getTimeInMillis());
+            System.out.println(shift.getLunchStop().getTimeInMillis());//*/
             
             //Boolean
             clockIn = punch.getPunchtypeid()==punch.CLOCKED_IN;
@@ -33,8 +37,10 @@ public class TASLogic {
             else{
                 //Null check 
                 if(previousPunch!=null){
-                    timeTotal+= punch.getAdjustedtimestamp()-previousPunch.getAdjustedtimestamp();
-                }else{
+                    timeTotal+= (punch.getAdjustedtimestamp()-previousPunch.getAdjustedtimestamp())/60000;
+                }
+                //Null error
+                else{
                     System.out.print("Fatal Error: No initial clock in");
                     return -1;
                 }
@@ -42,8 +48,8 @@ public class TASLogic {
             
         }
     
-        System.out.println(timeTotal/60000);
-        return timeTotal/60000;
+        //System.out.println(timeTotal/60000);
+        return timeTotal;
     }
     
 }
