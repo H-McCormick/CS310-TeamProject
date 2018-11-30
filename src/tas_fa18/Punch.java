@@ -207,6 +207,11 @@ public class Punch {
     public void adjust(Shift shift){
         this.adjustedStamp.setTimeInMillis(this.originalStamp.getTimeInMillis());
         GregorianCalendar shiftstart2 = new GregorianCalendar();
+        GregorianCalendar lunchstart2 = new GregorianCalendar();
+        lunchstart2.setTimeInMillis(shift.getLunchStart().getTimeInMillis());
+        lunchstart2.set(Calendar.YEAR, originalStamp.get(Calendar.YEAR));
+        lunchstart2.set(Calendar.MONTH, originalStamp.get(Calendar.MONTH));
+        lunchstart2.set(Calendar.DATE, originalStamp.get(Calendar.DATE));
         
         long shiftStart = shift.getStart().getTimeInMillis();
         shiftstart2.setTimeInMillis(shiftStart);
@@ -214,8 +219,8 @@ public class Punch {
         int gracePeriod = shift.getGracePeriod();
         int interval = shift.getInterval();
         int dock = shift.getDock();
-        long lunchStart = shift.getLunchStart().getTimeInMillis();
-        long lunchStop = shift.getLunchStop().getTimeInMillis();
+        long lunchStart = lunchstart2.getTimeInMillis();
+        long lunchStop = lunchstart2.getTimeInMillis();
         long punchin = this.originalStamp.getTimeInMillis();
         
         long gracePeriodMillis = gracePeriod*60000;
@@ -280,6 +285,9 @@ public class Punch {
                  
                 //Minutes in the hour
                 int min = this.originalStamp.get(Calendar.MINUTE);
+                if( min == 7 && originalStamp.get(Calendar.SECOND) > 30){
+                    min = min ++;
+                }
                  
                 //Check moving up
                 boolean adjustUp = min % interval > interval;
@@ -297,7 +305,7 @@ public class Punch {
                 }
                     
                 this.adjustedStamp.set(Calendar.SECOND, 0);
-                this.adjustedRule = "None";
+                this.adjustedRule = "Interval Round";
             }
            
         }
@@ -341,6 +349,7 @@ public class Punch {
                  
                 //Adjustment amount 
                 int adjustAmount = (min%interval);
+
                          
                 //If it is being rounded up
                 if(adjustUp){
