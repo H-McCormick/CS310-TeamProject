@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class TASLogic {
     
+    private final static int MINUTECONVERSION = 60000;
+    
     public static void TASLogic(String[] args) {
         
         TASDatabase db = new TASDatabase();
@@ -17,14 +19,11 @@ public class TASLogic {
         Punch previousPunch = null;
         int timeTotal = 0;
         
+        //Get Lunch time from shift object
+        long lunchTime = (shift.getLunchStop().getTimeInMillis()-shift.getLunchStart().getTimeInMillis())/MINUTECONVERSION;
+        
         //Loop through the punches
         for(Punch punch: punchList){
-
-    //DEBUG
-            /*System.out.println(punch.getAdjustedtimestamp());
-            System.out.println(punch.getPunchtypeid());
-            System.out.println(shift.getLunchStart().getTimeInMillis());
-            System.out.println(shift.getLunchStop().getTimeInMillis());//*/
             
             //Boolean
             clockIn = punch.getPunchtypeid()==punch.CLOCKED_IN;
@@ -35,9 +34,22 @@ public class TASLogic {
             }
             //Subtract the punches from each other
             else{
-                //Null check 
+                //Success case
                 if(previousPunch!=null){
-                    timeTotal+= (punch.getAdjustedtimestamp()-previousPunch.getAdjustedtimestamp())/60000;
+                    //Calculate the time worked
+                    long indivTimeWorked = (punch.getAdjustedtimestamp()-previousPunch.getAdjustedtimestamp())/MINUTECONVERSION;
+                    
+                    System.out.println(indivTimeWorked);
+                    //System.out.println(lunchTime);
+                    //System.out.println(shift.getLunchDeduct());
+                    
+                    //Deduct lunch
+                    if(indivTimeWorked > shift.getLunchDeduct()){
+                        indivTimeWorked -= lunchTime;
+                    }
+                    
+                    //Add time to the total
+                    timeTotal+= indivTimeWorked;
                 }
                 //Null error
                 else{
