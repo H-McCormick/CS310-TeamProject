@@ -9,9 +9,12 @@ package tas_fa18;
  *
  * @author forresthood
  */
+
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Set;
+
 
 public class Punch {
     private int id;
@@ -203,7 +206,10 @@ public class Punch {
     //Feature 3
     public void adjust(Shift shift){
         this.adjustedStamp.setTimeInMillis(this.originalStamp.getTimeInMillis());
+        GregorianCalendar shiftstart2 = new GregorianCalendar();
+        
         long shiftStart = shift.getStart().getTimeInMillis();
+        shiftstart2.setTimeInMillis(shiftStart);
         long shiftStop = shift.getStop().getTimeInMillis();
         int gracePeriod = shift.getGracePeriod();
         int interval = shift.getInterval();
@@ -216,6 +222,11 @@ public class Punch {
         long intervalMillis = interval*60000;
         long dockMillis = dock*60000;
         
+        shiftstart2.set(Calendar.YEAR, originalStamp.get(Calendar.YEAR));
+        shiftstart2.set(Calendar.MONTH, originalStamp.get(Calendar.MONTH));
+        shiftstart2.set(Calendar.DATE, originalStamp.get(Calendar.DATE));
+        shiftStart = shiftstart2.getTimeInMillis();
+        
         int day = originalStamp.get(Calendar.DAY_OF_WEEK);
         
         if(day == 7 || day == 1){
@@ -226,52 +237,71 @@ public class Punch {
         //If it's a clock in
         else if(this.punchTypeID == CLOCKED_IN){
             //Shift Start
-            if (((shiftStart + gracePeriodMillis) > punchin) && (shiftStart < punchin)){
+            
+            
+            
+            if (((shiftStart + gracePeriodMillis) >= punchin) && (punchin >= shiftStart)){
                 //Within grace period
-                this.adjustedStamp.setTimeInMillis(shiftStart);
+                this.adjustedStamp.set(Calendar.MINUTE, shiftstart2.get(Calendar.MINUTE));
+                this.adjustedStamp.set(Calendar.HOUR_OF_DAY, shiftstart2.get(Calendar.HOUR_OF_DAY));
+                this.adjustedStamp.set(Calendar.SECOND, shiftstart2.get(Calendar.SECOND));
+                
+                //this.adjustedStamp.setTimeInMillis(shiftStart);
                 this.adjustedRule = "Shift Start";
             }
-            else if(((shiftStart) > punchin) && (shiftStart - intervalMillis) < punchin){
-                //Before start of shift
-                this.adjustedStamp.setTimeInMillis(shiftStart);
-                this.adjustedRule = "Shift Start";
-            }
-            else if(((shiftStart + gracePeriod) < punchin) && (shiftStart + intervalMillis) > punchin){
+            
+            
+            else if(((shiftStart + gracePeriod) <= punchin) && (shiftStart + intervalMillis) >= punchin){
                 //After grace period
                 this.adjustedStamp.setTimeInMillis(shiftStart + intervalMillis);
                 this.adjustedRule = "Shift Dock";
-            }  
+            }
+            
+            else if(((shiftStart) >= punchin) && (shiftStart - intervalMillis) <= punchin){
+                //Before start of shift
+                this.adjustedStamp.set(Calendar.MINUTE, shiftstart2.get(Calendar.MINUTE));
+                this.adjustedStamp.set(Calendar.HOUR_OF_DAY, shiftstart2.get(Calendar.HOUR_OF_DAY));
+                this.adjustedStamp.set(Calendar.SECOND, shiftstart2.get(Calendar.SECOND));
+                //this.adjustedStamp.setTimeInMillis(shiftStart);
+                this.adjustedRule = "Shift Start";
+            }
+            /* else if(((shiftStart + gracePeriod) < punchin) && (shiftStart + intervalMillis) > punchin){
+                //After grace period
+                this.adjustedStamp.setTimeInMillis(shiftStart + intervalMillis);
+                this.adjustedRule = "Shift Dock";
+            }  */
                 //Lunch Stop
-            else if ((lunchStart < punchin) && (lunchStop > punchin)){
+            else if ((lunchStart <= punchin) && (lunchStop >= punchin)){
                 this.adjustedStamp.setTimeInMillis(lunchStop);
                 this.adjustedRule = "Lunch Stop";
             }
-            else{
+            else {
                 //Round up to adjusted timeframe (15)
                  
                 //Minutes in the hour
                 int min = this.originalStamp.get(Calendar.MINUTE);
                  
                 //Check moving up
-                boolean adjustUp = min % interval > interval/2;
+                boolean adjustUp = min % interval > interval;
                  
                 //Adjustment amount 
-                int adjustAmount = (min%interval);
+                int adjustAmount = (min % interval - interval);
                          
                 //If it is being rounded up
-                if(adjustUp){
-                    this.adjustedStamp.add((Calendar.MINUTE), adjustAmount);
+                if(adjustUp) {
+                    this.adjustedStamp.add(Calendar.MINUTE, adjustAmount);
                 }
                 //If it is being rounded down
-                else{
-                    this.adjustedStamp.add((Calendar.MINUTE), - adjustAmount);
+                else {
+                    this.adjustedStamp.add(Calendar.MINUTE, - adjustAmount);
                 }
                     
                 this.adjustedStamp.set(Calendar.SECOND, 0);
                 this.adjustedRule = "None";
             }
-            
+           
         }
+    
         
         //ShiftStop
         else if (this.punchTypeID == CLOCKED_OUT) {
@@ -300,7 +330,7 @@ public class Punch {
                 this.adjustedRule = "Lunch Start";
                 }
             
-            else{
+            else {
                 //Round up to adjusted timeframe (15)
                  
                 //Minutes in the hour
@@ -318,7 +348,7 @@ public class Punch {
                 }
                 //If it is being rounded down
                 else{
-                    this.adjustedStamp.add(Calendar.MINUTE, -adjustAmount);
+                    this.adjustedStamp.add(Calendar.MINUTE, - adjustAmount);
                 }
                     
                 this.adjustedStamp.set(Calendar.SECOND, 0);
