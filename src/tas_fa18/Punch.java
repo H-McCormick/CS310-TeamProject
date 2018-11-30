@@ -222,6 +222,11 @@ public class Punch {
         long intervalMillis = interval*60000;
         long dockMillis = dock*60000;
         
+        shiftstart2.set(Calendar.YEAR, originalStamp.get(Calendar.YEAR));
+        shiftstart2.set(Calendar.MONTH, originalStamp.get(Calendar.MONTH));
+        shiftstart2.set(Calendar.DATE, originalStamp.get(Calendar.DATE));
+        shiftStart = shiftstart2.getTimeInMillis();
+        
         int day = originalStamp.get(Calendar.DAY_OF_WEEK);
         
         if(day == 7 || day == 1){
@@ -233,12 +238,9 @@ public class Punch {
         else if(this.punchTypeID == CLOCKED_IN){
             //Shift Start
             
-            if(((shiftStart + gracePeriod) < punchin) && (shiftStart + intervalMillis) > punchin){
-                //After grace period
-                this.adjustedStamp.setTimeInMillis(shiftStart + intervalMillis);
-                this.adjustedRule = "Shift Dock";
-            }
-            else if (((shiftStart + gracePeriodMillis) > punchin) && (punchin < shiftStart)){
+            
+            
+            if (((shiftStart + gracePeriodMillis) > punchin) && (punchin < shiftStart)){
                 //Within grace period
                 this.adjustedStamp.set(Calendar.MINUTE, shiftstart2.get(Calendar.MINUTE));
                 this.adjustedStamp.set(Calendar.HOUR_OF_DAY, shiftstart2.get(Calendar.HOUR_OF_DAY));
@@ -248,11 +250,12 @@ public class Punch {
                 this.adjustedRule = "Shift Start";
             }
             
-            /* if(((shiftStart + gracePeriod) < punchin) && (shiftStart + intervalMillis) > punchin){
+            
+            else if(((shiftStart + gracePeriod) < punchin) && (shiftStart + intervalMillis) > punchin){
                 //After grace period
                 this.adjustedStamp.setTimeInMillis(shiftStart + intervalMillis);
                 this.adjustedRule = "Shift Dock";
-            } */
+            }
             
             else if(((shiftStart) > punchin) && (shiftStart - intervalMillis) < punchin){
                 //Before start of shift
