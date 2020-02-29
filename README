@@ -1,12 +1,22 @@
-This file gives an overview of this program and who was involved in the making of it. 
+This file gives an overview of this program and who was involved in the development of it.
+This program was made as part of a project for CS 310 - Software Engineering offered at Jacksonville State University
+This project began development on October 10th, 2018 and ended development on November 30th, 2018. 
+This program was written in Java using the NetBeans program.
+All of the necessary files needed to run the system are included in the repository. 
 Developers: Hunter McCormick, Chao Lin, Forrest Hood, Sabrina Rosenbaum, Ali Beljafla, Lauren Johnson
 
 This program is a clock-in clock-out system for a company that has a large number of employees.
-This program aims to make employees' total amount of earned time over the week match the same amount of hours that they were scheduled. 
-This program allows employees to clock in and out of the system while keeping track of there total amount of hours earned in a week. 
-A grace period time is incorporated into this system that pushes a employee's time forward or back in order to have the time that they clocked in match the time they were supposed to come into work. 
-This grace period is a 5 minute time limit before and after the start of the shift, as well as 5 minutes before and after the end of the shift. 
+This program aims to make employees' total amount of earned time over the week match the same number of hours that they were scheduled. 
+This program allows employees to clock in and out of the system while keeping track of their total amount of hours earned in a week. 
+Each employee has a unique badge number that identifies who they are. The system identifies which employee has clocked in by this badge number and tracks the number of hours worked to them. 
+A grace period time is incorporated into this system that pushes an employee's time forward or back in order to have the time that they clocked in match the time they were supposed to come into work. 
+This grace period is a five-minute time limit before and after the start of the shift, as well as 5 minutes before and after the end of the shift. 
 For example, if an employee is scheduled to work at 9:00am and they clock in at 8:57am, the systems will push that employee's clock in time forward to 9:00am instead of 8:57am in order to avoid giving employees extra time. 
-If an employee were to clock in at 9:02am in this same example, then their clock in time would be pushed back to 9:00am
+If an employee were to clock in at 9:02am in this same example, then their clock in time would be pushed back to 9:00am.
 This works the same way when the employee goes to clock out of the system. 
-This program also takes into account the same system if an employee has a scheduled lunch break. 
+This program also uses the same system if an employee has a scheduled lunch break. 
+The system takes the adjusted times and uses that to identify the total number of hours an employee has worked in a week. 
+With this program, a separate file is included that contains a list of different cases where employees have clocked in at different times on different days in order to ensure that the program runs as intended.
+When running this program, it will output whether the program has passed these tests or not. If the program passes a certain case, the text will appear in green. If not, the text will appear in red and specifies which case it failed. 
+ 
+
